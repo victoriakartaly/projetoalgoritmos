@@ -124,63 +124,82 @@ def ver_filmes_cartaz():
     if (not filmes_em_cartaz):
         print('Não há filmes em cartaz esta semana.')
 
+    import re
 
 def cadastrar_filme(filmes):
-    print('\n---------------Cadastro de Novo Filme---------------\n')
+        print('\n---------------Cadastro de Novo Filme---------------\n')
 
+        while True:
+            filme = input('Digite o nome do filme: ').strip()
+            if filme:
+                break
+            else:
+                print('Erro! Nome do filme não pode ser vazio.')
 
-    filme = input('Digite o nome do filme: ')
-    while not filme.strip():
-        filme = input('Erro! Nome do filme não pode ser vazio. Digite o nome do filme: ')
+        while True:
+            idfilme = input('Digite o ID do filme: ')
+            if idfilme.isdigit():
+                idfilme = int(idfilme)
+                break
+            else:
+                print('Erro! ID do filme deve ser um número.')
 
-    idfilme = input('Digite o ID do filme: ')
-    while not idfilme.isdigit():
-        idfilme = input('Erro! ID do filme deve ser um número. Digite o ID do filme novamente: ')
-    idfilme = int(idfilme)
+        while True:
+            ano = input('Digite o ano de lançamento do filme: ')
+            if ano.isdigit():
+                ano = int(ano)
+                break
+            else:
+                print('Erro! Ano de lançamento deve ser um número.')
 
-    ano = input('Digite o ano de lançamento do filme: ')
-    while not ano.isdigit():
-        ano = input('Erro! Ano de lançamento deve ser um número. Digite o ano de lançamento novamente: ')
-    ano = int(ano)
+        while True:
+            diretor = input('Digite o nome do diretor do filme: ').strip()
+            if diretor:
+                break
+            else:
+                print('Erro! Nome do diretor não pode ser vazio.')
 
-    diretor = input('Digite o nome do diretor do filme: ')
-    while not diretor.strip():
-        diretor = input('Erro! Nome do diretor não pode ser vazio. Digite o nome do diretor: ')
+        while True:
+            sala = input('Digite a sala de exibição do filme: ')
+            if sala.isdigit():
+                sala = int(sala)
+                break
+            else:
+                print('Erro! Sala de exibição deve ser um número.')
 
-    sala = input('Digite a sala de exibição do filme: ')
-    while not sala.isdigit():
-        sala = input('Erro! Sala de exibição deve ser um número. Digite a sala novamente: ')
-    sala = int(sala)
+        while True:
+            lugares = input('Digite a quantidade de lugares disponíveis: ')
+            if lugares.isdigit():
+                lugares = int(lugares)
+                break
+            else:
+                print('Erro! Quantidade de lugares deve ser um número.')
 
-    lugares = input('Digite a quantidade de lugares disponíveis: ')
-    while not lugares.isdigit():
-        lugares = input('Erro! Quantidade de lugares deve ser um número. Digite novamente: ')
-    lugares = int(lugares)
+        horario = input('Digite o horário das sessões do filme: ')
 
-    horario = input('Digite o horário das sessões do filme: ')
+        while True:
+            valores = input('Digite o valor do ingresso para este filme: ')
+            if re.match(r'^\d+(\.\d{1,2})?$', valores):
+                valores = float(valores)
+                break
+            else:
+                print('Erro! Valor do ingresso deve ser um número.')
 
-    valores = input('Digite o valor do ingresso para este filme: ')
-    while not re.match(r'^\d+(\.\d{1,2})?$', valores):
-        valores = input('Erro! Valor do ingresso deve ser um número. Digite o valor novamente: ')
-    valores = float(valores)
+        novo_filme = {
+            'idfilme': idfilme,
+            'ano': ano,
+            'diretor': diretor,
+            'sala': sala,
+            'lugares': lugares,
+            'horario': horario,
+            'valores': valores,
+            'em_cartaz': True
+        }
 
-    novo_filme = {
-        'idfilme': idfilme,
-        'ano': ano,
-        'diretor': diretor,
-        'sala': sala,
-        'lugares': lugares,
-        'horario': horario,
-        'valores': valores,
-        'em_cartaz': True
-    }
+        filmes.append(filmes)
 
+        print(f'\nFilme cadastrado com sucesso!\n')
 
-    filmes = novo_filme
-
-    print(f'\nFilme "{filme}" cadastrado com sucesso!\n')
-
-    return filmes
 
 def buscar_filme(filmes):
     print('\n---------------Buscar Filme---------------\n')
@@ -202,6 +221,7 @@ def buscar_filme(filmes):
         print(f'\nFilme "{busca}" não encontrado.')
 
     return filmes
+
 
 
 def atualizar_filme(filmes):
@@ -251,22 +271,25 @@ def remover_filme(filmes):
 def mostrar_filmes(filmes):
     print('\n---------------Todos os Filmes Disponíveis---------------\n')
 
-    if (not filmes):
+    if not filmes:
         print('Não há filmes cadastrados.')
     else:
-        for chave, filme in filmes.items():
-            print(f'Nome do Filme: {chave}')
-            print(f'ID do Filme: {filme["idfilme"]}')
-            print(f'Ano de Lançamento: {filme["ano"]}')
-            print(f'Diretor(a): {filme["diretor"]}')
-            print(f'Salas de Exibição: {filme["sala"]}')
-            print(f'Lugares Disponíveis: {filme["lugares"]}')
-            print(f'Horários das Sessões: {filme["horario"]}')
-            print(f'Valor do Ingresso: R$ {filme["valores"]:.2f}')
-            print(f'Ingressos Vendidos: {filme["ingressosvendidos"]}')
-            print('-' * 50)
+        if isinstance(filmes, dict):
+            for chave, filme in filmes.items():
+                print(f'Nome do Filme: {chave}')
+                print(f'ID do Filme: {filme["idfilme"]}')
+                print(f'Ano de Lançamento: {filme["ano"]}')
+                print(f'Diretor(a): {filme["diretor"]}')
+                print(f'Salas de Exibição: {filme["sala"]}')
+                print(f'Lugares Disponíveis: {filme["lugares"]}')
+                print(f'Horários das Sessões: {filme["horario"]}')
+                print(f'Valor do Ingresso: R$ {filme["valores"]:.2f}')
+                print(f'Ingressos Vendidos: {filme.get("ingressosvendidos", 0)}')
+        else:
+            print('Formato de dados inválido para filmes.')
 
     input('\nPressione Enter para continuar...')
+
 
 
 def mostrar_ingressos_vendidos(compra):
