@@ -49,7 +49,7 @@ def login_usuario(usuarios):
         login = input('Digite seu login: ')
         senha = input('Digite sua senha: ')
 
-        if login in usuarios and usuarios[login]['senha'] == senha:
+        if (login in usuarios and usuarios[login]['senha'] == senha):
             perfil = usuarios[login]['perfil']
             nome = usuarios[login]['nome']
             print(f'\nLogin realizado com sucesso, {nome}!')
@@ -89,7 +89,7 @@ def comprar_ingressos():
 
         confirmacao = input(f'Deseja comprar ingressos para o filme "{filme_escolhido}"? (sim/não): ').lower()
 
-        if confirmacao == 'sim':
+        if (confirmacao == 'sim'):
             qtde_ingressos = int(input('Quantos ingressos deseja comprar? '))
             if qtde_ingressos <= filmes[filme_escolhido]['lugares']:
                 filmes[filme_escolhido]['lugares'] -= qtde_ingressos
@@ -97,7 +97,7 @@ def comprar_ingressos():
                 compra.append(filme_escolhido)
             else:
                 print('Quantidade de ingressos desejada excede o número de lugares disponíveis.')
-        elif confirmacao == 'não':
+        elif (confirmacao == 'não'):
             print('Compra cancelada.')
         else:
             print('Opção inválida. Compra cancelada.')
@@ -111,7 +111,7 @@ def ver_filmes_cartaz():
     filmes_em_cartaz = False
 
     for filme, info in filmes.items():
-        if info.get('em_cartaz'):
+        if (info.get('em_cartaz')):
             filmes_em_cartaz = True
             print(f'Filme: {filme}')
             print(f'Ano de lançamento: {info["ano"]}')
@@ -121,7 +121,7 @@ def ver_filmes_cartaz():
             print(f'Horários das sessões: {info["horario"]}')
             print(f'Valor do ingresso: R$ {info["valores"]:.2f}\n')
 
-    if not filmes_em_cartaz:
+    if (not filmes_em_cartaz):
         print('Não há filmes em cartaz esta semana.')
 
 
@@ -235,9 +235,9 @@ def remover_filme(filmes):
 
     busca = input('Digite o nome do filme que deseja remover: ')
 
-    if busca in filmes:
+    if (busca in filmes):
         confirmacao = input(f'Tem certeza que deseja remover o filme "{busca}"? (sim/não): ')
-        if confirmacao.lower() == 'sim':
+        if (confirmacao.lower() == 'sim'):
             del filmes[busca]
             print(f'\nFilme "{busca}" removido com sucesso!\n')
         else:
@@ -251,7 +251,7 @@ def remover_filme(filmes):
 def mostrar_filmes(filmes):
     print('\n---------------Todos os Filmes Disponíveis---------------\n')
 
-    if not filmes:
+    if (not filmes):
         print('Não há filmes cadastrados.')
     else:
         for chave, filme in filmes.items():
@@ -272,7 +272,7 @@ def mostrar_filmes(filmes):
 def mostrar_ingressos_vendidos(compra):
     print('\n---------------Todos os Ingressos Vendidos---------------\n')
 
-    if not compra:
+    if (not compra):
         print('Não há ingressos vendidos registrados.')
     else:
         for ingresso in compra:
@@ -290,7 +290,7 @@ def mostrar_ingressos_filme(filmes):
 
     filme = filmes.get(nome_filme)
 
-    if filme:
+    if (filme):
         ingressos_vendidos = filme.get('ingressos_vendidos', 0)
         print(f'Filme: {nome_filme}')
         print(f'Ingressos Vendidos: {ingressos_vendidos}')
@@ -304,7 +304,7 @@ def gerar_relatorio(ingressos_vendidos):
     print('\n---------------Gerar Relatório de Ingressos Vendidos---------------\n')
 
 
-    if not ingressos_vendidos:
+    if (not ingressos_vendidos):
         print('Não há ingressos vendidos para gerar relatório.')
         return
 
@@ -333,7 +333,7 @@ def alterar_dados_admin(usuarios):
 
     login = input('Digite o login do administrador que deseja alterar os dados: ')
 
-    if login in usuarios and usuarios[login][1] == 1:  # Verifica se o login existe e se é um administrador (perfil 1)
+    if (login in usuarios and usuarios[login][1] == 1):  # Verifica se o login existe e se é um administrador (perfil 1)
         print('Opções disponíveis para alteração:')
         print('1 - Alterar login')
         print('2 - Alterar senha')
@@ -342,19 +342,19 @@ def alterar_dados_admin(usuarios):
 
         opcao = input('Digite o número da opção desejada: ')
 
-        if opcao == '1':
+        if (opcao == '1'):
             novo_login = input('Digite o novo login: ')
             usuarios[login][0] = novo_login
             print('Login atualizado com sucesso!')
-        elif opcao == '2':
+        elif (opcao == '2'):
             nova_senha = input('Digite a nova senha: ')
             usuarios[login][2] = nova_senha
             print('Senha atualizada com sucesso!')
-        elif opcao == '3':
+        elif (opcao == '3'):
             novo_email = input('Digite o novo email: ')
             usuarios[login][3] = novo_email
             print('Email atualizado com sucesso!')
-        elif opcao == '4':
+        elif (opcao == '4'):
             print('Operação cancelada. Retornando ao menu anterior...')
         else:
             print('Opção inválida. Tente novamente.')
@@ -367,7 +367,7 @@ def alterar_dados_admin(usuarios):
 def ver_filmes_disponiveis(filmes):
     print('\n---------------Ver Filmes Disponíveis---------------\n')
 
-    if not filmes:
+    if (not filmes):
         print('Nenhum filme cadastrado.')
     else:
         for chave, filme in filmes.items():
@@ -388,7 +388,7 @@ def ver_filmes_disponiveis(filmes):
 def ver_minhas_compras(compras):
     print('\n---------------Ver Minhas Compras---------------\n')
 
-    if not compras:
+    if (not compras):
         print('Você ainda não realizou nenhuma compra.')
     else:
         for compra in compras:
@@ -405,7 +405,7 @@ def alterar_dados_cliente(usuarios):
 
     login = input('Digite o login do administrador que deseja alterar os dados: ')
 
-    if login in usuarios and usuarios[login][1] == 2:
+    if (login in usuarios and usuarios[login][1] == 2):
         print('Opções disponíveis para alteração:')
         print('1 - Alterar login')
         print('2 - Alterar senha')
@@ -414,19 +414,19 @@ def alterar_dados_cliente(usuarios):
 
         opcao = input('Digite o número da opção desejada: ')
 
-        if opcao == '1':
+        if (opcao == '1'):
             novo_login = input('Digite o novo login: ')
             usuarios[login][0] = novo_login
             print('Login atualizado com sucesso!')
-        elif opcao == '2':
+        elif (opcao == '2'):
             nova_senha = input('Digite a nova senha: ')
             usuarios[login][2] = nova_senha
             print('Senha atualizada com sucesso!')
-        elif opcao == '3':
+        elif (opcao == '3'):
             novo_email = input('Digite o novo email: ')
             usuarios[login][3] = novo_email
             print('Email atualizado com sucesso!')
-        elif opcao == '4':
+        elif (opcao == '4'):
             print('Operação cancelada. Retornando ao menu anterior...')
         else:
             print('Opção inválida. Tente novamente.')
@@ -440,7 +440,7 @@ def alterar_dados_cliente(usuarios):
 def cancelar_compra(compras):
     print('\n---------------Cancelar Compra---------------\n')
 
-    if not compras:
+    if (not compras):
         print('Não há compras registradas para cancelar.\n')
         return
 
@@ -453,10 +453,10 @@ def cancelar_compra(compras):
     while True:
         try:
             num_compra = int(input('Digite o número da compra que deseja cancelar (ou 0 para voltar): '))
-            if num_compra == 0:
+            if (num_compra == 0):
                 print('Cancelamento de compra finalizado.\n')
                 break
-            elif 1 <= num_compra <= len(compras):
+            elif (1 <= num_compra <= len(compras)):
                 compra_cancelada = compras.pop(num_compra - 1)
                 print(f'Compra "{compra_cancelada}" cancelada com sucesso.\n')
                 break
